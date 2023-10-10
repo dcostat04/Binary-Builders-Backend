@@ -4,5 +4,7 @@ django-admin version
 
 python manage.py runserver
 
-For Creating Virtual Env
-https://www.youtube.com/watch?v=RUGm1Lwc55s&ab_channel=TechieDude
+- For Virtual Env
+  - python3 -m venv env
+  - env\Scripts\activate.ps1 (To Activate the Virtual Env)
+  - deactivate (To Deactivate the Virtual Env)
