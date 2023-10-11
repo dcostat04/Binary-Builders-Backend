@@ -9,14 +9,12 @@ https://docs.djangoproject.com/en/4.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
-import environ
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-env = environ.Env()
-environ.Env.read_env()
+
 
 
 # Quick-start development settings - unsuitable for production
@@ -33,16 +31,12 @@ ALLOWED_HOSTS = []
 DATABASES = {
     'default': {
         'ENGINE': 'mssql', # Or 'django.db.backends.postgresql', 'django.db.backends.sqlite3', etc.
-        'NAME': env('DATABASE_NAME'),
-        'USER': env('DATABASE_USER'),
-        'PASSWORD': env('DATABASE_PASSWORD'),
+        'NAME': 'sql_table',
+        'USER': 'sqladmin',
+        'PASSWORD': 'BinaryBuilder@1',
         'HOST': 'binarybuilders.database.windows.net', # Azure Database Server Address
         'PORT': '', # Leave this empty for default port
     }
-}
-
-REST_FRAMEWORK = {
-    "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
 }
 
 
