@@ -2,7 +2,7 @@ from django.shortcuts import render
 from rest_framework import viewsets
 # from api.serializers import CompanySerializer,EmployeeSerializer
 from rest_framework.response import Response
-from api.models import Booking, SignUp
+from api.models import Booking, SignUp, Confirmation
 from rest_framework import status
 import json
 
@@ -54,6 +54,31 @@ class SignUpViewset(viewsets.ModelViewSet):
 
                 SignUp_create = SignUp(**data)
                 SignUp_create.save()
+
+                return Response(
+                    {"status":"OKAY","data":data}, status=status.HTTP_201_CREATED
+                )
+        except Exception as e:
+            return Response(
+                {"status":"ERROR","ERROR":str(e)}
+            )
+        
+class ConfirmationViewset(viewsets.ModelViewSet):
+    def create(self,request):
+        try:
+            if len(request.body) > 0:
+                output_dict = json.loads(request.body.decode("utf-8"))
+                data = dict()
+                data['issue'] = output_dict.get('issue')
+                data['description'] = output_dict.get('description')
+                data['date'] = output_dict.get('date')
+                data['time'] = output_dict.get('time')
+
+
+                # print(data)
+
+                Confirmation_create = Confirmation(**data)
+                Confirmation_create.save()
 
                 return Response(
                     {"status":"OKAY","data":data}, status=status.HTTP_201_CREATED

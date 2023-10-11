@@ -24,6 +24,14 @@ class SignUp(models.Model):
     password=models.CharField(max_length=50)
     confirm_password=models.CharField(max_length=50)
 
+class Confirmation(models.Model):
+    id=models.AutoField(primary_key=True)
+    issue=models.CharField(max_length=100)
+    description=models.CharField(max_length=300)
+    date=models.CharField(max_length=20)
+    time=models.CharField(max_length=20)
+    
+
 # class login(models.Model):
 #     email_address=models.CharField(max_length=50)
 #     login_password=models.CharField(max_length=50)
