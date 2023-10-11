@@ -1,20 +1,36 @@
 from django.db import models
 
 # Create your models here.
-class Company(models.Model):
-    company_id=models.AutoField(primary_key=True)
+class Booking(models.Model):
+    referal_id=models.AutoField(primary_key=True)
     name=models.CharField(max_length=50)
-    location=models.CharField(max_length=50)
-    about=models.TextField()
-    type=models.CharField(max_length=100)
-
-    def __str__(self):
-        return self.name
-    
-class Employee(models.Model):
-    name=models.CharField(max_length=100)
     email=models.CharField(max_length=50)
-    address=models.CharField(max_length=200)
-    phone=models.CharField(max_length=10)
-    about=models.TextField()
-    company=models.ForeignKey(Company,on_delete=models.CASCADE)
+    phone=models.CharField(max_length=50)
+    address=models.CharField(max_length=50)
+    city=models.CharField(max_length=20,default="london")
+    issue=models.TextField()
+    description=models.CharField(max_length=200)
+    citizenship_id=models.CharField(max_length=16)
+    relation=models.CharField(max_length=50)
+
+class SignUp(models.Model):
+    id=models.AutoField(primary_key=True)
+    firstname=models.CharField(max_length=30)
+    lastname=models.CharField(max_length=20)
+    phone_number=models.CharField(max_length=12)
+    email=models.CharField(max_length=50)
+    address=models.CharField(max_length=50)
+    city=models.CharField(max_length=50)
+    password=models.CharField(max_length=50)
+    confirm_password=models.CharField(max_length=50)
+
+# class login(models.Model):
+#     email_address=models.CharField(max_length=50)
+#     login_password=models.CharField(max_length=50)
+# class Employee(models.Model):
+#     name=models.CharField(max_length=100)
+#     email=models.CharField(max_length=50)
+#     address=models.CharField(max_length=200)
+#     phone=models.CharField(max_length=10)
+#     about=models.TextField()
+#     company=models.ForeignKey(Company,on_delete=models.CASCADE)
