@@ -36,9 +36,21 @@ DATABASES = {
         'NAME': env('DATABASE_NAME'),
         'USER': env('DATABASE_USER'),
         'PASSWORD': env('DATABASE_PASSWORD'),
-        'HOST': 'sqldemotest.database.windows.net', # Azure Database Server Address
+        'HOST': 'binarybuilders.database.windows.net', # Azure Database Server Address
         'PORT': '', # Leave this empty for default port
     }
+}
+
+REST_FRAMEWORK = {
+    "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
+}
+
+
+SPECTACULAR_SETTINGS = {
+    'TITLE':'Api for Codefest',
+    'DESCRIPTION':'Api list for the listening ear',
+    'VERSION':'1.0.0',
+    'SERVE_INCLUDE_SCHEMA':False
 }
 
 
