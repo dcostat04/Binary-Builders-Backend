@@ -7,6 +7,7 @@ class Booking(models.Model):
     email=models.CharField(max_length=50)
     phone=models.CharField(max_length=50)
     address=models.CharField(max_length=50)
+    city=models.CharField(max_length=20,default="london")
     issue=models.TextField()
     description=models.CharField(max_length=200)
     citizenship_id=models.CharField(max_length=16)
