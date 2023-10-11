@@ -28,11 +28,18 @@ class Confirmation(models.Model):
     id=models.AutoField(primary_key=True)
     DOB=models.CharField(max_length=25,default="01/01/2000")
     issue=models.CharField(max_length=100)
-    description=models.CharField(max_length=300)
+    description=models.CharField(max_length=500)
     date=models.CharField(max_length=20)
     time=models.CharField(max_length=20)
     
-    
+class Consultation_details(models.Model):
+    id=models.AutoField(primary_key=True)
+    user_id=models.CharField(max_length=20)
+    therapist_name= models.CharField(max_length=30)
+    date_of_consultation= models.CharField(max_length=20)
+    description_by_therapist= models.CharField(max_length=500)
+
+
 
 # class login(models.Model):
 #     email_address=models.CharField(max_length=50)

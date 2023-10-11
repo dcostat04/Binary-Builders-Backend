@@ -2,7 +2,7 @@ from django.shortcuts import render
 from rest_framework import viewsets
 # from api.serializers import CompanySerializer,EmployeeSerializer
 from rest_framework.response import Response
-from api.models import Booking, SignUp, Confirmation
+from api.models import Booking, SignUp, Confirmation, Consultation_details
 from rest_framework import status
 import json
 
@@ -112,6 +112,30 @@ class ConfirmationViewset(viewsets.ModelViewSet):
                 {"status":"ERROR","ERROR":str(e)}
             )
         
+class Consultation_detailsViewset(viewsets.ModelViewSet):
+    def create(self,request):
+        try:
+            if len(request.body) > 0:
+                output_dict = json.loads(request.body.decode("utf-8"))
+                data = dict()
+                data['user_id'] = output_dict.get('user_id')
+                data['therapist_name'] = output_dict.get('therapist_name')
+                data['date_of_consultation'] = output_dict.get('date_of_consultation')
+                data['description_by_therapist'] = output_dict.get('description_by_therapist')
+
+
+                # print(data)
+
+                Consultation_details_create = Consultation_details(**data)
+                Consultation_details_create.save()
+
+                return Response(
+                    {"status":"OKAY","data":data}, status=status.HTTP_201_CREATED
+                )
+        except Exception as e:
+            return Response(
+                {"status":"ERROR","ERROR":str(e)}
+            )
 # class loginViewset(viewsets.ModelViewSet):
 #     def create(self,request):
 #         try:
