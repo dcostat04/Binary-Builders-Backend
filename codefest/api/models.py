@@ -13,7 +13,20 @@ class Booking(models.Model):
     citizenship_id=models.CharField(max_length=16)
     relation=models.CharField(max_length=50)
 
-    
+class SignUp(models.Model):
+    id=models.AutoField(primary_key=True)
+    firstname=models.CharField(max_length=30)
+    lastname=models.CharField(max_length=20)
+    phone_number=models.CharField(max_length=12)
+    email=models.CharField(max_length=50)
+    address=models.CharField(max_length=50)
+    city=models.CharField(max_length=50)
+    password=models.CharField(max_length=50)
+    confirm_password=models.CharField(max_length=50)
+
+# class login(models.Model):
+#     email_address=models.CharField(max_length=50)
+#     login_password=models.CharField(max_length=50)
 # class Employee(models.Model):
 #     name=models.CharField(max_length=100)
 #     email=models.CharField(max_length=50)

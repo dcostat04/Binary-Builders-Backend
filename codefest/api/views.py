@@ -2,7 +2,7 @@ from django.shortcuts import render
 from rest_framework import viewsets
 # from api.serializers import CompanySerializer,EmployeeSerializer
 from rest_framework.response import Response
-from api.models import Booking
+from api.models import Booking, SignUp
 from rest_framework import status
 import json
 
@@ -34,6 +34,79 @@ class BookingViewset(viewsets.ModelViewSet):
             return Response(
                 {"status":"ERROR","ERROR":str(e)}
             )
+
+class SignUpViewset(viewsets.ModelViewSet):
+    def create(self,request):
+        try:
+            if len(request.body) > 0:
+                output_dict = json.loads(request.body.decode("utf-8"))
+                data = dict()
+                data['firstname'] = output_dict.get('firstname')
+                data['lastname'] = output_dict.get('lastname')
+                data['phone_number'] = output_dict.get('phone_number')
+                data['email'] = output_dict.get('email')
+                data['address'] = output_dict.get('address')
+                data['city'] = output_dict.get('city')
+                data['password'] = output_dict.get('password')
+                data['confirm_password'] = output_dict.get('confirm_password')
+
+                # print(data)
+
+                SignUp_create = SignUp(**data)
+                SignUp_create.save()
+
+                return Response(
+                    {"status":"OKAY","data":data}, status=status.HTTP_201_CREATED
+                )
+        except Exception as e:
+            return Response(
+                {"status":"ERROR","ERROR":str(e)}
+            )
+
+class loginVisewset(viewsets.ModelViewSet):
+    def list(self,request):
+        try:
+            if len(request.body) > 0:
+                output_dict = json.loads(request.body.decode("utf-8"))
+                username = output_dict.get('email')
+                password = output_dict.get('password')
+                # print(data)
+                myobj = SignUp.objects.filter(email=username,password=password)
+                # print(myobj)
+                if len(myobj)>0:
+                    return Response(
+                        {"User":True}
+                    )
+                else:
+                    return Response(
+                        {"User":False}
+                    )
+        except Exception as e:
+            return Response(
+                {"status":"ERROR","ERROR":str(e)}
+            )
+        
+# class loginViewset(viewsets.ModelViewSet):
+#     def create(self,request):
+#         try:
+#             if len(request.body) > 0:
+#                 output_dict = json.loads(request.body.decode("utf-8"))
+#                 data = dict()
+#                 data['email_address'] = output_dict.get('email_address')
+#                 data['login_password'] = output_dict.get('login_password')
+                
+#                 # print(data)
+
+#                 login_create = login(**data)
+#                 login_create.save()
+
+#                 return Response(
+#                     {"status":"OKAY","data":data}, status=status.HTTP_201_CREATED
+#                 )
+#         except Exception as e:
+#             return Response(
+#                 {"status":"ERROR","ERROR":str(e)}
+#             )
 # # Create your views here.
 # class CompanyViewSet(viewsets.ModelViewSet):
 #     queryset=Company.objects.all()
