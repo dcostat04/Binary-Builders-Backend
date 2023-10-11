@@ -92,6 +92,7 @@ class ConfirmationViewset(viewsets.ModelViewSet):
             if len(request.body) > 0:
                 output_dict = json.loads(request.body.decode("utf-8"))
                 data = dict()
+                data['DOB'] = output_dict.get('DOB')
                 data['issue'] = output_dict.get('issue')
                 data['description'] = output_dict.get('description')
                 data['date'] = output_dict.get('date')

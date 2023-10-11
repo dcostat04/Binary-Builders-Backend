@@ -26,10 +26,12 @@ class SignUp(models.Model):
 
 class Confirmation(models.Model):
     id=models.AutoField(primary_key=True)
+    DOB=models.CharField(max_length=25,default="01/01/2000")
     issue=models.CharField(max_length=100)
     description=models.CharField(max_length=300)
     date=models.CharField(max_length=20)
     time=models.CharField(max_length=20)
+    
     
 
 # class login(models.Model):
