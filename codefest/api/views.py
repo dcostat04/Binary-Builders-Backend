@@ -62,6 +62,29 @@ class SignUpViewset(viewsets.ModelViewSet):
             return Response(
                 {"status":"ERROR","ERROR":str(e)}
             )
+
+class loginVisewset(viewsets.ModelViewSet):
+    def list(self,request):
+        try:
+            if len(request.body) > 0:
+                output_dict = json.loads(request.body.decode("utf-8"))
+                username = output_dict.get('email')
+                password = output_dict.get('password')
+                # print(data)
+                myobj = SignUp.objects.filter(email=username,password=password)
+                # print(myobj)
+                if len(myobj)>0:
+                    return Response(
+                        {"User":True}
+                    )
+                else:
+                    return Response(
+                        {"User":False}
+                    )
+        except Exception as e:
+            return Response(
+                {"status":"ERROR","ERROR":str(e)}
+            )
         
 # class loginViewset(viewsets.ModelViewSet):
 #     def create(self,request):
