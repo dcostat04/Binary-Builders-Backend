@@ -5,6 +5,7 @@ from rest_framework.response import Response
 from api.models import Booking, SignUp, Confirmation, Consultation_details
 from rest_framework import status
 import json
+from django.http import JsonResponse
 from django.http import HttpResponse
 from django.core.mail import send_mail
 import string
@@ -111,6 +112,7 @@ class ConfirmationViewset(viewsets.ModelViewSet):
                 data['time'] = output_dict.get('time')
 
                 
+                
                 # print(data)
 
                 Confirmation_create = Confirmation(**data)
@@ -120,7 +122,8 @@ class ConfirmationViewset(viewsets.ModelViewSet):
     
                 meet_id = f'https://meet.google.com/rct-xexv-exv'
 
-                recipient_email = '9415kks@gmail.com'
+                payload_data = json.loads(request.body)
+                recipient_email =  payload_data.get("email")
 
                 from_email = 'krangarius@gmail.com'
         
@@ -131,10 +134,8 @@ class ConfirmationViewset(viewsets.ModelViewSet):
 
                 send_mail(subject, message, from_email, [recipient_email], fail_silently=False)
 
-                return HttpResponse("Meeting invitations sent successfully.")
-
             return Response(
-                    {"status":"OKAY","data":data}, status=status.HTTP_201_CREATED
+                    {"status":"OKAY","data":"Meeting invitations sent successfully."}, status=status.HTTP_201_CREATED
                 )
         except Exception as e:
             return Response(
