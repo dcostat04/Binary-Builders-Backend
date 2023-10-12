@@ -66,6 +66,7 @@ INSTALLED_APPS = [
     'api',
     'rest_framework', 
     'mail',
+    'corsheaders'
 ]
 
 MIDDLEWARE = [
