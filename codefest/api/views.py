@@ -7,7 +7,8 @@ from rest_framework import status
 import json
 from django.http import HttpResponse
 from django.core.mail import send_mail
-
+import string
+import random
 
 
 class BookingViewset(viewsets.ModelViewSet):
@@ -110,13 +111,30 @@ class ConfirmationViewset(viewsets.ModelViewSet):
                 data['date'] = output_dict.get('date')
                 data['time'] = output_dict.get('time')
 
-
+                
                 # print(data)
 
                 Confirmation_create = Confirmation(**data)
                 Confirmation_create.save()
 
-                return Response(
+
+    
+                meet_id = f'https://meet.google.com/rct-xexv-exv'
+
+                recipient_email = '9415kks@gmail.com'
+
+                from_email = 'krangarius@gmail.com'
+        
+                meet_link = meet_id
+
+                subject = 'Join Our Meeting'
+                message = f'Hello,\n\nPlease join our Google Meet meeting using the following link: {meet_link}.\n\nBest regards.'
+
+                send_mail(subject, message, from_email, [recipient_email], fail_silently=False)
+
+                return HttpResponse("Meeting invitations sent successfully.")
+
+            return Response(
                     {"status":"OKAY","data":data}, status=status.HTTP_201_CREATED
                 )
         except Exception as e:
