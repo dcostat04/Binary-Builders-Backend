@@ -40,8 +40,13 @@ class Consultation_details(models.Model):
     date_of_consultation= models.CharField(max_length=20)
     description_by_therapist= models.CharField(max_length=500)
 
-
-
+class therapist_details(models.Model):
+    id=models.AutoField(primary_key=True)
+    name= models.CharField(max_length=30) 
+    qualification= models.CharField(max_length=100)
+    expertise= models.CharField(max_length=100)
+    city= models.CharField(max_length=20)
+    
 # class login(models.Model):
 #     email_address=models.CharField(max_length=50)
 #     login_password=models.CharField(max_length=50)
