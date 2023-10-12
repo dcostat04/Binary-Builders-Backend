@@ -147,6 +147,30 @@ class Consultation_detailsViewset(viewsets.ModelViewSet):
             return Response(
                 {"status":"ERROR","ERROR":str(e)}
             )
+
+class userdetailedViewset(viewsets.ModelViewSet):
+    def create(self,request):
+        try:
+            if len(request.body) > 0:
+                output_dict = json.loads(request.body.decode("utf-8"))
+                data = dict()
+                # data['user_id'] = output_dict.get('user_id')
+                casefile_obj = Confirmation.objects.filter(DOB=)
+
+
+                # print(data)
+
+                Consultation_details_create = Consultation_details(**data)
+                Consultation_details_create.save()
+
+                return Response(
+                    {"status":"OKAY","data":data}, status=status.HTTP_201_CREATED
+                )
+        except Exception as e:
+            return Response(
+                {"status":"ERROR","ERROR":str(e)}
+            )
+
 # class loginViewset(viewsets.ModelViewSet):
 #     def create(self,request):
 #         try:
