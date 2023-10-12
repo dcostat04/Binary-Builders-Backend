@@ -38,9 +38,8 @@ class BookingViewset(viewsets.ModelViewSet):
                 recipient_list = [data['email']]
 
                 send_mail(subject, message, from_email, recipient_list)
-                return HttpResponse("Emails sent successfully")
             return Response(
-                    {"status":"OKAY","data":data}, status=status.HTTP_201_CREATED
+                    {"status":"OKAY","data":"Emails sent successfully"}, status=status.HTTP_201_CREATED
                 )
         except Exception as e:
             return Response(
