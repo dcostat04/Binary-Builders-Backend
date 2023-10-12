@@ -35,7 +35,7 @@ class BookingViewset(viewsets.ModelViewSet):
 
                 subject = 'Detailed explanation of concerned issue'
                 # message = 'Hi'
-                message = "Thank you for reaching out to us. We are happy to help and listen to you. Please visit the link and provide a detailed overview of you concern. USERNAME:" + data['email'] + "PASSWORD:" + "random@123"
+                message = "Thank you for reaching out to us. We are happy to help and listen to you. Please visit the link and provide a detailed overview of you concern.\n USERNAME:" + data['email'] + "PASSWORD:" + "random@123"
                 from_email = 'krangarius@gmail.com'
                 recipient_list = [data['email']]
 
@@ -120,22 +120,10 @@ class ConfirmationViewset(viewsets.ModelViewSet):
 
 
     
-                meet_id = f'https://meet.google.com/rct-xexv-exv'
-
-                payload_data = json.loads(request.body)
-                recipient_email =  payload_data.get("email")
-
-                from_email = 'krangarius@gmail.com'
-        
-                meet_link = meet_id
-
-                subject = 'Join Our Meeting'
-                message = f'Hello,\n\nPlease join our Google Meet meeting using the following link: {meet_link}.\n\nBest regards.'
-
-                send_mail(subject, message, from_email, [recipient_email], fail_silently=False)
+                
 
             return Response(
-                    {"status":"OKAY","data":"Meeting invitations sent successfully."}, status=status.HTTP_201_CREATED
+                    {"status":"OKAY","data":data}, status=status.HTTP_201_CREATED
                 )
         except Exception as e:
             return Response(
@@ -198,6 +186,34 @@ class userdetailedViewset(viewsets.ModelViewSet):
             return Response(
                 {"status":"ERROR","ERROR":str(e)}
             )
+        
+class MeetingLinkViewset(viewsets.ModelViewSet):
+    def create(self,request):
+        try:
+            if len(request.body) > 0:
+                output_dict = json.loads(request.body.decode("utf-8"))
+                data = dict()
+
+                meet_id = f'https://meet.google.com/rct-xexv-exv'
+                recipient_email =  output_dict.get("email")
+
+                from_email = 'krangarius@gmail.com'
+        
+                meet_link = meet_id
+
+                subject = 'Join Our Meeting'
+                message = f'Hello,\n\nPlease join our Google Meet meeting using the following link: {meet_link}.\n\nBest regards.'
+
+                send_mail(subject, message, from_email, [recipient_email], fail_silently=False)
+
+                return Response(
+                    {"status":"OKAY","data":"Meeting invitations sent successfully."}, status=status.HTTP_201_CREATED
+                )
+        except Exception as e:
+            return Response(
+                {"status":"ERROR","ERROR":str(e)}
+            )
+
 
 # class loginViewset(viewsets.ModelViewSet):
 #     def create(self,request):
