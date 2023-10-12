@@ -27,6 +27,8 @@ class BookingViewset(viewsets.ModelViewSet):
                 booking_create = Booking(**data)
                 booking_create.save()
 
+
+
                 return Response(
                     {"status":"OKAY","data":data}, status=status.HTTP_201_CREATED
                 )
@@ -64,7 +66,7 @@ class SignUpViewset(viewsets.ModelViewSet):
             )
 
 class loginVisewset(viewsets.ModelViewSet):
-    def list(self,request):
+    def create(self,request):
         try:
             if len(request.body) > 0:
                 output_dict = json.loads(request.body.decode("utf-8"))
