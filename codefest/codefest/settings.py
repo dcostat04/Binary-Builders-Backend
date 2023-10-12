@@ -9,14 +9,14 @@ https://docs.djangoproject.com/en/4.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
-import environ
+# import environ
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-env = environ.Env()
-environ.Env.read_env()
+# env = environ.Env()
+# environ.Env.read_env()
 
 
 # Quick-start development settings - unsuitable for production
@@ -33,17 +33,17 @@ ALLOWED_HOSTS = []
 DATABASES = {
     'default': {
         'ENGINE': 'mssql', # Or 'django.db.backends.postgresql', 'django.db.backends.sqlite3', etc.
-        'NAME': env('DATABASE_NAME'),
-        'USER': env('DATABASE_USER'),
-        'PASSWORD': env('DATABASE_PASSWORD'),
+        'NAME': 'sql_table',
+        'USER': 'sqladmin',
+        'PASSWORD': 'BinaryBuilder@1',
         'HOST': 'binarybuilders.database.windows.net', # Azure Database Server Address
         'PORT': '', # Leave this empty for default port
     }
 }
 
-REST_FRAMEWORK = {
-    "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
-}
+# REST_FRAMEWORK = {
+#     "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
+# }
 
 
 SPECTACULAR_SETTINGS = {
@@ -65,6 +65,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'api',
     'rest_framework', 
+    'corsheaders'
 ]
 
 MIDDLEWARE = [
@@ -75,7 +76,10 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
 ]
+
+CORS_ALLOW_ALL_ORIGINS = True
 
 ROOT_URLCONF = 'codefest.urls'
 
