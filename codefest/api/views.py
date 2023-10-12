@@ -2,9 +2,12 @@ from django.shortcuts import render
 from rest_framework import viewsets
 # from api.serializers import CompanySerializer,EmployeeSerializer
 from rest_framework.response import Response
-from api.models import Booking, SignUp
+from api.models import Booking, SignUp, Confirmation, Consultation_details
 from rest_framework import status
 import json
+from django.http import HttpResponse
+from django.core.mail import send_mail
+
 
 
 class BookingViewset(viewsets.ModelViewSet):
@@ -21,13 +24,22 @@ class BookingViewset(viewsets.ModelViewSet):
                 data['description'] = output_dict.get('description')
                 data['citizenship_id'] = output_dict.get('citizenship_id')
                 data['relation'] = output_dict.get('relation')
+    
 
                 # print(data)
 
                 booking_create = Booking(**data)
                 booking_create.save()
 
-                return Response(
+                subject = 'Detailed explanation of concerned issue'
+                # message = 'Hi'
+                message = "Thank you for reaching out to us. We are happy to help and listen to you. Please visit the link and provide a detailed overview of you concern. USERNAME:" + data['email'] + "PASSWORD:" + "random@123"
+                from_email = 'krangarius@gmail.com'
+                recipient_list = [data['email']]
+
+                send_mail(subject, message, from_email, recipient_list)
+                return HttpResponse("Emails sent successfully")
+            return Response(
                     {"status":"OKAY","data":data}, status=status.HTTP_201_CREATED
                 )
         except Exception as e:
@@ -86,6 +98,56 @@ class loginVisewset(viewsets.ModelViewSet):
                 {"status":"ERROR","ERROR":str(e)}
             )
         
+class ConfirmationViewset(viewsets.ModelViewSet):
+    def create(self,request):
+        try:
+            if len(request.body) > 0:
+                output_dict = json.loads(request.body.decode("utf-8"))
+                data = dict()
+                data['DOB'] = output_dict.get('DOB')
+                data['issue'] = output_dict.get('issue')
+                data['description'] = output_dict.get('description')
+                data['date'] = output_dict.get('date')
+                data['time'] = output_dict.get('time')
+
+
+                # print(data)
+
+                Confirmation_create = Confirmation(**data)
+                Confirmation_create.save()
+
+                return Response(
+                    {"status":"OKAY","data":data}, status=status.HTTP_201_CREATED
+                )
+        except Exception as e:
+            return Response(
+                {"status":"ERROR","ERROR":str(e)}
+            )
+        
+class Consultation_detailsViewset(viewsets.ModelViewSet):
+    def create(self,request):
+        try:
+            if len(request.body) > 0:
+                output_dict = json.loads(request.body.decode("utf-8"))
+                data = dict()
+                data['user_id'] = output_dict.get('user_id')
+                data['therapist_name'] = output_dict.get('therapist_name')
+                data['date_of_consultation'] = output_dict.get('date_of_consultation')
+                data['description_by_therapist'] = output_dict.get('description_by_therapist')
+
+
+                # print(data)
+
+                Consultation_details_create = Consultation_details(**data)
+                Consultation_details_create.save()
+
+                return Response(
+                    {"status":"OKAY","data":data}, status=status.HTTP_201_CREATED
+                )
+        except Exception as e:
+            return Response(
+                {"status":"ERROR","ERROR":str(e)}
+            )
 # class loginViewset(viewsets.ModelViewSet):
 #     def create(self,request):
 #         try:
