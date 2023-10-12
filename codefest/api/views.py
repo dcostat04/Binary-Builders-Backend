@@ -167,19 +167,28 @@ class Consultation_detailsViewset(viewsets.ModelViewSet):
             )
 
 class userdetailedViewset(viewsets.ModelViewSet):
-    def create(self,request):
+    def list(self,request):
         try:
             if len(request.body) > 0:
-                output_dict = json.loads(request.body.decode("utf-8"))
                 data = dict()
                 # data['user_id'] = output_dict.get('user_id')
-                casefile_obj = Confirmation.objects.filter(DOB=)
+                casefile_obj = Confirmation.objects.filter(DOB='02/04/2000')
+                casefile_obj2 = Consultation_details.objects.filter(user_id='23456')
 
+                data_obj = []
+                for query in casefile_obj:
+                    # print(query.DOB,query.issue)
+                    val={"DOB":query.DOB,"issue":query.issue,"description":query.description,"data":query.date,"time":query.time}
+                    data_obj.append(val)
 
-                # print(data)
+                data_obj2 = []
+                for query in casefile_obj2:
+                    # print(query.user_id,query.therapist_name)
+                    val={"user_id":query.user_id,"therapist_name":query.therapist_name,"consulation_date":query.date_of_consultation,"description":query.description_by_therapist}
+                    data_obj2.append(val)
 
-                Consultation_details_create = Consultation_details(**data)
-                Consultation_details_create.save()
+                data["detailByPatient"] = data_obj
+                data["detailBytherapist"] = data_obj2
 
                 return Response(
                     {"status":"OKAY","data":data}, status=status.HTTP_201_CREATED
